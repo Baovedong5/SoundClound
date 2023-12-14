@@ -21,6 +21,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -64,6 +65,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function AppHeader() {
+  const { data: session } = useSession();
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -122,7 +125,14 @@ export default function AppHeader() {
           Profile
         </Link>
       </MenuItem>
-      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+      <MenuItem
+        onClick={() => {
+          handleMenuClose();
+          signOut();
+        }}
+      >
+        Logout
+      </MenuItem>
     </Menu>
   );
 
@@ -220,10 +230,20 @@ export default function AppHeader() {
                 },
               }}
             >
-              <Link href={"/playlist"}>Playlists</Link>
-              <Link href={"like"}>Likes</Link>
-              <span>Upload</span>
-              <Avatar onClick={handleProfileMenuOpen}>ER</Avatar>
+              {session ? (
+                <>
+                  <Link href={"/playlist"}>Playlists</Link>
+                  <Link href={"like"}>Likes</Link>
+                  <span>Upload</span>
+                  <Avatar onClick={handleProfileMenuOpen}>ER</Avatar>
+                </>
+              ) : (
+                <>
+                  <Link href={"#"} onClick={() => signIn()}>
+                    Login
+                  </Link>
+                </>
+              )}
             </Box>
             <Box sx={{ display: { xs: "flex", md: "none" } }}>
               <IconButton
