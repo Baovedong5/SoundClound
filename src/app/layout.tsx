@@ -12,11 +12,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ThemeRegistry>
-          <NextAuthWrapper>
-            <AppHeader />
-            {children}
-            <AppFooter />
-          </NextAuthWrapper>
+          <NextAuthWrapper>{children}</NextAuthWrapper>
         </ThemeRegistry>
       </body>
     </html>
