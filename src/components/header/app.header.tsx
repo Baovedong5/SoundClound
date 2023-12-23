@@ -116,7 +116,7 @@ export default function AppHeader() {
     >
       <MenuItem>
         <Link
-          href={"/profile"}
+          href={`/profile/${session?.user._id}`}
           style={{
             color: "unset",
             textDecoration: "none",
