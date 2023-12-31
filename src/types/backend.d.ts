@@ -22,6 +22,35 @@ declare global {
     updatedAt: string;
   }
 
+  interface ITrackComment {
+    _id: string;
+    content: string;
+    moment: number;
+    user: {
+      _id: string;
+      email: string;
+      name: string;
+      role: string;
+      type: string;
+    };
+    track: string;
+    isDeleted: boolean;
+    createdAt: string;
+    updatedAt: string;
+  }
+
+  interface ITrackLike {
+    _id: string;
+    title: string;
+    description: string;
+    imgUrl: string;
+    trackUrl: string;
+    countLike: string;
+    countPlay: string;
+    createdAt: string;
+    updatedAt: string;
+  }
+
   interface IRequest {
     url: string;
     method: string;
