@@ -9,6 +9,8 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRightOutlined";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeftOutlined";
 import { Box, Divider } from "@mui/material";
 import Link from "next/link";
+import { convertSlugUrl } from "@/utils/api";
+import Image from "next/image";
 
 interface IProps {
   data: ITrackTop[];
@@ -65,6 +67,32 @@ const MainSilder = (props: IProps) => {
     slidesToScroll: 1,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
   return (
     <Box
@@ -91,11 +119,27 @@ const MainSilder = (props: IProps) => {
         {data.map((track) => {
           return (
             <div className="track" key={track._id}>
-              <img
-                src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${track.imgUrl}`}
-              />
+              <div
+                style={{
+                  position: "relative",
+                  height: "150px",
+                  width: "150px",
+                }}
+              >
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_BACKEND_URL}/images/${track.imgUrl}`}
+                  alt="image track"
+                  fill
+                  style={{
+                    objectFit: "contain",
+                  }}
+                />
+              </div>
+
               <Link
-                href={`/track/${track._id}?audio=${track.trackUrl}&id=${track._id}`}
+                href={`/track/${convertSlugUrl(track.title)}-${
+                  track._id
+                }.html?audio=${track.trackUrl}`}
               >
                 <h4>{track.title}</h4>
               </Link>

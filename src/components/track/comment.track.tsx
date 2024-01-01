@@ -4,6 +4,7 @@ import { Box, TextField } from "@mui/material";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import WaveSurfer from "wavesurfer.js";
@@ -80,12 +81,11 @@ const CommentTrack = (props: IProps) => {
       </div>
       <div style={{ display: "flex", gap: "10px" }}>
         <div className="left" style={{ width: "190px" }}>
-          <img
-            style={{
-              height: 150,
-              width: 150,
-            }}
+          <Image
             src={fetchDefaultImages(track?.uploader?.type!)}
+            alt="avatar comment"
+            height={150}
+            width={150}
           />
           <div>{track?.uploader?.email}</div>
         </div>
@@ -108,12 +108,11 @@ const CommentTrack = (props: IProps) => {
                     alignItems: "center",
                   }}
                 >
-                  <img
-                    style={{
-                      height: 40,
-                      width: 40,
-                    }}
+                  <Image
                     src={fetchDefaultImages(comment.user.type)}
+                    alt="comments"
+                    height={40}
+                    width={40}
                   />
                   <div>
                     <div style={{ fontSize: "13px" }}>
