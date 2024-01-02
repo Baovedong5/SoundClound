@@ -7,7 +7,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions: AuthOptions = {
   // Configure one or more authentication providers
-  secret: process.env.NO_SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -21,7 +21,7 @@ export const authOptions: AuthOptions = {
       },
       async authorize(credentials, req) {
         const res = await sendRequest<IBackendRes<JWT>>({
-          url: "http://localhost:8000/api/v1/auth/login",
+          url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/auth/login`,
           method: "POST",
           body: {
             username: credentials?.username,
@@ -45,7 +45,7 @@ export const authOptions: AuthOptions = {
     async jwt({ token, user, account, profile, trigger }) {
       if (trigger === "signIn" && account?.provider !== "credentials") {
         const res = await sendRequest<IBackendRes<JWT>>({
-          url: "http://localhost:8000/api/v1/auth/social-media",
+          url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/auth/social-media`,
           method: "POST",
           body: {
             type: account?.provider.toLocaleUpperCase(),
