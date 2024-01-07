@@ -36,6 +36,20 @@ export async function generateMetadata(
   };
 }
 
+export async function generateStaticParams() {
+  return [
+    {
+      slug: "le-luu-ly-651bfa95ab5ba07f78841f2e.html",
+    },
+    {
+      slug: "xi-mang-pho-651bfa95ab5ba07f78841f30.html",
+    },
+    {
+      slug: "tinh-co-yeu-em-651bfa95ab5ba07f78841f31.html",
+    },
+  ];
+}
+
 const DetailTrackPage = async (props: any) => {
   const { params } = props;
 
@@ -48,7 +62,7 @@ const DetailTrackPage = async (props: any) => {
     url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/tracks/${id}`,
     method: "GET",
     nextOption: {
-      cache: "no-store",
+      next: { tags: ["track-by-id"] },
     },
   });
 
@@ -63,7 +77,7 @@ const DetailTrackPage = async (props: any) => {
     },
   });
 
-  await new Promise((resolve) => setTimeout(resolve, 3000));
+  await new Promise((resolve) => setTimeout(resolve, 5000));
 
   if (!res?.data) notFound();
 
