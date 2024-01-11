@@ -6,24 +6,22 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { fetchDefaultImages } from "@/utils/api";
 import Image from "next/image";
+import ActiveLink from "./active.link";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -117,15 +115,7 @@ export default function AppHeader() {
       onClose={handleMenuClose}
     >
       <MenuItem>
-        <Link
-          href={`/profile/${session?.user._id}`}
-          style={{
-            color: "unset",
-            textDecoration: "none",
-          }}
-        >
-          Profile
-        </Link>
+        <ActiveLink href={`/profile/${session?.user._id}`}>Profile</ActiveLink>
       </MenuItem>
       <MenuItem
         onClick={() => {
@@ -218,8 +208,8 @@ export default function AppHeader() {
                 inputProps={{ "aria-label": "search" }}
                 onKeyDown={(e: any) => {
                   if (e.key === "Enter") {
-                  if (e?.target?.value)
-                  router.push(`/search?q=${e?.target?.value}`)
+                    if (e?.target?.value)
+                      router.push(`/search?q=${e?.target?.value}`);
                   }
                 }}
               />
@@ -234,15 +224,22 @@ export default function AppHeader() {
 
                 "> a": {
                   color: "unset",
-                  textDecoration: "none",
+                  textDecoration: "unset",
+                  padding: "5px",
+
+                  "&.active": {
+                    background: "#3b4b59",
+                    color: "#cefaff",
+                    borderRadius: "5px",
+                  },
                 },
               }}
             >
               {session ? (
                 <>
-                  <Link href={"/playlist"}>Playlists</Link>
-                  <Link href={"/like"}>Likes</Link>
-                  <Link href={"/track/upload"}>Upload</Link>
+                  <ActiveLink href={"/playlist"}>Playlists</ActiveLink>
+                  <ActiveLink href={"/like"}>Likes</ActiveLink>
+                  <ActiveLink href={"/track/upload"}>Upload</ActiveLink>
                   <Image
                     onClick={handleProfileMenuOpen}
                     src={fetchDefaultImages(session.user.type)}
@@ -253,7 +250,7 @@ export default function AppHeader() {
                 </>
               ) : (
                 <>
-                  <Link href={"/auth/signin"}>Login</Link>
+                  <ActiveLink href={"/auth/signin"}>Login</ActiveLink>
                 </>
               )}
             </Box>
