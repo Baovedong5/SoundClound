@@ -78,6 +78,37 @@ declare global {
     result: T[];
   }
 
+  interface IPlaylist {
+    _id: string;
+    title: string;
+    description: string;
+    tracks: {
+      _id: string;
+      title: string;
+      description: string;
+      category: string;
+      imgUrl: string;
+      trackUrl: string;
+      countLike: number;
+      countPlay: number;
+      uploader: {
+        _id: string;
+        email: string;
+        name: string;
+        role: string;
+        type: string;
+      };
+      isDeleted: boolean;
+      createdAt: string;
+      updatedAt: string;
+      isPlaying: boolean;
+    }[];
+    isDeleted: boolean;
+    createdAt: string;
+    updatedAt: string;
+    isPublic: boolean;
+  }
+
   interface IShareTrack extends ITrackTop {
     isPlaying: boolean;
   }
